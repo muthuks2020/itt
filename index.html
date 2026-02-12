@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITP — Intelligent Tender Process | Appasamy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="chat.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       LOGIN PAGE
+       ═══════════════════════════════════════════ -->
+  <div id="loginPage">
+    <div class="login-deco d1"></div>
+    <div class="login-deco d2"></div>
+    <div class="login-deco d3"></div>
+
+    <div class="login-card">
+      <div class="login-hero">
+        <div class="hero-inner">
+          <div class="hero-chip"><span class="dot"></span> AI-Powered Platform</div>
+          <h1>The <em>Intelligent</em><br>Tender Process</h1>
+          <p>Transform your tender submission workflow. Our AI reads, analyzes, and structures complex tender documents — giving your team a strategic advantage from day one.</p>
+        </div>
+        <div class="hero-metrics">
+          <div class="hm"><div class="hm-v"><span>60%</span></div><div class="hm-l">Time Saved</div></div>
+          <div class="hm"><div class="hm-v"><span>98%</span></div><div class="hm-l">Accuracy</div></div>
+          <div class="hm"><div class="hm-v"><span>3×</span></div><div class="hm-l">More Bids</div></div>
+        </div>
+      </div>
+
+      <div class="login-form-side">
+        <h2>Welcome back</h2>
+        <p class="sub">Sign in to your ITP dashboard</p>
+        <div class="login-err" id="loginErr">Invalid credentials. Please try again.</div>
+        <form onsubmit="return doLogin(event)">
+          <div class="fg">
+            <label>Email address</label>
+            <input class="fi" id="em" type="email" placeholder="you@appasamy.com" value="admin@appasamy.com" required>
+          </div>
+          <div class="fg">
+            <label>Password</label>
+            <input class="fi" id="pw" type="password" placeholder="Enter password" value="admin123" required>
+          </div>
+          <div class="fr-between">
+            <label><input type="checkbox" checked> Remember me</label>
+            <a href="#">Forgot password?</a>
+          </div>
+          <button type="submit" class="btn btn-blue">Sign in to Dashboard</button>
+        </form>
+        <div class="login-bot">Powered by <a href="https://www.appasamy.com/" target="_blank">Appasamy Associates</a></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════
+       APP LAYOUT
+       ═══════════════════════════════════════════ -->
+  <div id="appLayout">
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="sb-logo">
+        <div class="sb-mark">ITP</div>
+        <div class="sb-text">Intelligent Tender<small>Appasamy</small></div>
+      </div>
+      <div class="sb-nav">
+        <div class="sb-lbl">Main</div>
+        <button class="sb-btn on" onclick="goHome()">
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Dashboard
+        </button>
+        <button class="sb-btn" onclick="goHome()">
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg></span>All Tenders<span class="bg" id="totBg">5</span>
+        </button>
+        <button class="sb-btn" onclick="openModal()">
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></span>Upload Tender
+        </button>
+        <div class="sb-lbl">AI Tools</div>
+        <button class="sb-btn">
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/><path d="M16 14a4 4 0 0 1 0 8H8a4 4 0 0 1 0-8"/><line x1="9" y1="18" x2="9" y2="18.01"/><line x1="15" y1="18" x2="15" y2="18.01"/></svg></span>AI Analysis
+        </button>
+        <button class="sb-btn" onclick="openBidSim()">
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg></span>Bid Simulator<span class="bg spark">NEW</span>
+        </button>
+        <button class="sb-btn">
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>Compliance Check
+        </button>
+        <div class="sb-lbl">Settings</div>
+        <button class="sb-btn">
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Team
+        </button>
+        <button class="sb-btn">
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>Preferences
+        </button>
+      </div>
+      <div class="sb-foot">
+        <div class="sb-av">AP</div>
+        <div class="sb-meta"><div class="nm">Admin User</div><div class="rl">Tender Manager</div></div>
+        <button class="sb-out" onclick="doLogout()" title="Logout">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main">
+      <div class="topbar">
+        <div class="tb-l"><h2 id="pgT">Dashboard</h2><p id="pgS">Overview of all tender activities</p></div>
+        <div class="tb-r">
+          <div class="ib ib-ai" onclick="openChat()" id="tbChatBtn" title="AI Assistant">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span class="reddot ai-dot"></span>
+          </div>
+          <div class="ib"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+          <div class="ib"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="reddot"></span></div>
+          <button class="btn-new" onclick="openModal()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            New Tender
+          </button>
+        </div>
+      </div>
+
+      <!-- ═══════════ DASHBOARD ═══════════ -->
+      <div class="page" id="dash">
+        <div class="stats">
+          <div class="st">
+            <div class="st-top">
+              <div class="st-ic c1"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></div>
+              <span class="st-trend">↑ 12%</span>
+            </div>
+            <div class="st-val" id="sT">5</div>
+            <div class="st-lbl">Total Tenders</div>
+          </div>
+          <div class="st">
+            <div class="st-top">
+              <div class="st-ic c2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+              <span class="st-trend">↑ 3</span>
+            </div>
+            <div class="st-val">3</div>
+            <div class="st-lbl">In Progress</div>
+          </div>
+          <div class="st">
+            <div class="st-top">
+              <div class="st-ic c3"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+            </div>
+            <div class="st-val">2</div>
+            <div class="st-lbl">Deadline This Week</div>
+          </div>
+          <div class="st">
+            <div class="st-top">
+              <div class="st-ic c4"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+              <span class="st-trend">↑ 8%</span>
+            </div>
+            <div class="st-val">72%</div>
+            <div class="st-lbl">Win Rate</div>
+          </div>
+        </div>
+
+        <div class="sec-bar">
+          <h3>Active Tenders</h3>
+          <div class="pills">
+            <button class="pill on">All</button>
+            <button class="pill">Analyzing</button>
+            <button class="pill">In Review</button>
+            <button class="pill">Ready</button>
+          </div>
+        </div>
+
+        <div class="tw">
+          <table>
+            <thead><tr><th>Tender Name</th><th>Organization</th><th>Status</th><th>Priority</th><th>Deadline</th><th>Progress</th><th>Action</th></tr></thead>
+            <tbody id="tbody">
+              <tr onclick="viewA()">
+                <td><span class="tn">Ophthalmic Equipments under NPCB&amp;VI</span><span class="tr">WBMSCL/NIT-036/2023</span></td>
+                <td>WBMSCL, West Bengal</td>
+                <td><span class="bdg b1">Analyzing</span></td>
+                <td><div class="pri"><span class="pd h"></span>High</div></td>
+                <td>21 Feb 2023</td>
+                <td>35%<div class="prog"><div class="fill" style="width:35%"></div></div></td>
+                <td><button class="sb hi" onclick="event.stopPropagation();viewA()">View</button></td>
+              </tr>
+              <tr>
+                <td><span class="tn">Medical Devices for District Hospitals</span><span class="tr">TNMSC/EQ/2023-098</span></td>
+                <td>TNMSC, Tamil Nadu</td>
+                <td><span class="bdg b2">In Review</span></td>
+                <td><div class="pri"><span class="pd h"></span>High</div></td>
+                <td>15 Mar 2023</td>
+                <td>68%<div class="prog"><div class="fill" style="width:68%"></div></div></td>
+                <td><button class="sb">View</button></td>
+              </tr>
+              <tr>
+                <td><span class="tn">IOL &amp; Surgical Consumables Supply</span><span class="tr">CGHS/PROC/2023-212</span></td>
+                <td>CGHS, Delhi</td>
+                <td><span class="bdg b3">Ready</span></td>
+                <td><div class="pri"><span class="pd m"></span>Medium</div></td>
+                <td>28 Mar 2023</td>
+                <td>92%<div class="prog"><div class="fill" style="width:92%"></div></div></td>
+                <td><button class="sb">View</button></td>
+              </tr>
+              <tr>
+                <td><span class="tn">Ophthalmic OT Equipment Package</span><span class="tr">KMSCL/EQ/2023-045</span></td>
+                <td>KMSCL, Kerala</td>
+                <td><span class="bdg b4">Submitted</span></td>
+                <td><div class="pri"><span class="pd l"></span>Low</div></td>
+                <td>10 Jan 2023</td>
+                <td>100%<div class="prog"><div class="fill" style="width:100%"></div></div></td>
+                <td><button class="sb">View</button></td>
+              </tr>
+              <tr>
+                <td><span class="tn">Phaco Machine &amp; Accessories</span><span class="tr">APMSIDC/MED/2023-167</span></td>
+                <td>APMSIDC, AP</td>
+                <td><span class="bdg b5">Draft</span></td>
+                <td><div class="pri"><span class="pd m"></span>Medium</div></td>
+                <td>05 Apr 2023</td>
+                <td>12%<div class="prog"><div class="fill" style="width:12%"></div></div></td>
+                <td><button class="sb">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ═══════════ ANALYSIS VIEW ═══════════ -->
+      <div class="page anl" id="anlView">
+        <button class="back" onclick="goHome()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to Dashboard
+        </button>
+
+        <div class="ah">
+          <div>
+            <h2>Ophthalmic Equipments under NPCB&amp;VI</h2>
+            <div class="ah-tags">
+              <span class="bdg b1">AI Analyzed</span>
+              <span style="font-size:11px;color:var(--text-400);font-family:monospace">WBMSCL/NIT-036/2023</span>
+            </div>
+            <div class="ah-meta">
+              <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Deadline: 21 Feb 2023</span>
+              <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> WBMSCL, Kolkata</span>
+              <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> EMD: ₹2,00,000</span>
+              <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> 62 Pages</span>
+            </div>
+          </div>
+          <div style="text-align:center">
+            <div class="sr" style="--pct:78%"><div class="sr-in">78</div></div>
+            <div class="sr-l">Bid Readiness</div>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <button class="tab on" onclick="stab('ov',this)">Overview</button>
+          <button class="tab" onclick="stab('rq',this)">Requirements</button>
+          <button class="tab" onclick="stab('cp',this)">Compliance</button>
+          <button class="tab" onclick="stab('tl',this)">Timeline</button>
+          <button class="tab" onclick="stab('dc',this)">Documents</button>
+        </div>
+
+        <!-- OVERVIEW -->
+        <div class="pnl on" id="p-ov">
+          <div class="ag">
+            <div class="ac">
+              <h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Tender Summary</h4>
+              <ul class="al">
+                <li><span class="lb">Issuing Authority</span><span class="vl">WBMSCL, Kolkata</span></li>
+                <li><span class="lb">Tender Type</span><span class="vl">e-Tender (2nd Call)</span></li>
+                <li><span class="lb">Category</span><span class="vl">Ophthalmic Equipment</span></li>
+                <li><span class="lb">Funding</span><span class="vl">NPCB&amp;VI, Dept of H&amp;FW</span></li>
+                <li><span class="lb">Bid Validity</span><span class="vl">2 Years</span></li>
+                <li><span class="lb">Supply Period</span><span class="vl">50 Days from AOC</span></li>
+                <li><span class="lb">Warranty</span><span class="vl">2 Yrs Comprehensive</span></li>
+              </ul>
+            </div>
+            <div class="ac">
+              <h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg> Equipment (9 Items)</h4>
+              <ul class="al">
+                <li><span class="lb">Slit Lamp + Tonometer</span><span class="vl">42 units</span></li>
+                <li><span class="lb">Direct Ophthalmoscope</span><span class="vl">185 units</span></li>
+                <li><span class="lb">Phaco Machine</span><span class="vl">21 units</span></li>
+                <li><span class="lb">Trial Box + Frame</span><span class="vl">150 units</span></li>
+                <li><span class="lb">Torch</span><span class="vl">440 units</span></li>
+                <li><span class="lb">Specular Microscope</span><span class="vl">4 units</span></li>
+                <li><span class="lb">Keratoplasty Set</span><span class="vl">4 units</span></li>
+                <li><span class="lb">Corneal Excision Set</span><span class="vl">4 units</span></li>
+                <li><span class="lb">Indirect Ophthalmoscope</span><span class="vl">10 units</span></li>
+              </ul>
+            </div>
+            <div class="ac">
+              <h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Financial</h4>
+              <ul class="al">
+                <li><span class="lb">EMD Amount</span><span class="vl">₹2,00,000 (Online)</span></li>
+                <li><span class="lb">Performance Security</span><span class="vl">3% of Bid Value</span></li>
+                <li><span class="lb">Min. Annual Turnover</span><span class="vl">₹3.5 Cr (Avg 3 FY)</span></li>
+                <li><span class="lb">Payment Terms</span><span class="vl">80% CRC / 20% SIC</span></li>
+                <li><span class="lb">LD for Delay</span><span class="vl">0.5%/week, max 5%</span></li>
+                <li><span class="lb">CMC Year 3-7</span><span class="vl">3% to 4%</span></li>
+              </ul>
+            </div>
+            <div class="ac">
+              <h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Risk Assessment</h4>
+              <ul class="al">
+                <li><span>Tight 50-day delivery</span><span class="rk rh">High</span></li>
+                <li><span>97% uptime guarantee</span><span class="rk rh">High</span></li>
+                <li><span>Functional demo mandatory</span><span class="rk rm">Medium</span></li>
+                <li><span>3 service center locations</span><span class="rk rm">Medium</span></li>
+                <li><span>10-yr spare availability</span><span class="rk rm">Medium</span></li>
+                <li><span>₹500/day downtime penalty</span><span class="rk rl">Low</span></li>
+              </ul>
+            </div>
+            <div class="ac fw">
+              <div class="ins">
+                <div class="tg"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> AI Strategic Insight</div>
+                <p>This tender covers <strong>9 equipment categories</strong> across varying complexity. Appasamy's strongest alignment is with Items 1 (Slit Lamp), 3 (Phaco Machine), and 9 (Indirect Ophthalmoscope). The <strong>50-day delivery timeline is aggressive</strong> — recommend pre-positioning inventory. EMD of ₹2L is uniform, suggesting individual item bidding is possible. Key differentiator: functional demo capability and <strong>3-location service network</strong> in WB (Kolkata, Siliguri, Durgapur). Consider partnering for items outside core competency.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- REQUIREMENTS -->
+        <div class="pnl" id="p-rq">
+          <div class="ag">
+            <div class="ac fw">
+              <h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> Key Technical Specifications</h4>
+              <div class="ri"><div class="rt">Slit Lamp — 5-step Galilean Magnification (6x–40x)</div><div class="rd">12.5x eyepiece, slit width 0-14mm, LED/Halogen illumination, motorized table, blue/red-free/amber filters. Applanation tonometer 10-80 mmHg, 3 prism tips. CE/FDA/BIS.</div></div>
+              <div class="ri"><div class="rt">Phaco Machine — Peristaltic Digital Pump, Closed Fluidic</div><div class="rd">Vacuum 500mmHg, US freq min 28KHz, micropulse 40-100, vitrectomy 1000+/min, 4-crystal handpiece, foot pedal, diathermy. CE/FDA/BIS.</div></div>
+              <div class="ri"><div class="rt">Specular Microscope — Eye Bank</div><div class="rd">FOV 1000×750μ, CMOS dual camera, multi-sample, temp sensor, pachymeter, 15° tilt, 100-240V AC.</div></div>
+              <div class="ri"><div class="rt">Indirect Ophthalmoscope — Wireless LED</div><div class="rd">PD 55-75mm, headband, L/M/S apertures, yellow/cobalt/red-free filters, rechargeable, +20D &amp; +30D lenses.</div></div>
+            </div>
+            <div class="ac">
+              <h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Eligibility</h4>
+              <ul class="al">
+                <li><span class="lb">Who Can Bid</span><span class="vl">OEM / Sub / Dealer</span></li>
+                <li><span class="lb">Turnover</span><span class="vl">₹3.5 Cr avg 3 FY</span></li>
+                <li><span class="lb">EMD</span><span class="vl">₹2L Online</span></li>
+                <li><span class="lb">Blacklisted</span><span class="vl">Not in last 5 yrs</span></li>
+                <li><span class="lb">Quality</span><span class="vl">CE(4-digit)/FDA/BIS</span></li>
+              </ul>
+            </div>
+            <div class="ac">
+              <h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Service &amp; Warranty</h4>
+              <ul class="al">
+                <li><span class="lb">Warranty</span><span class="vl">2 Years</span></li>
+                <li><span class="lb">Uptime</span><span class="vl">97%</span></li>
+                <li><span class="lb">Response</span><span class="vl">6 hrs</span></li>
+                <li><span class="lb">Rectification</span><span class="vl">48 hrs</span></li>
+                <li><span class="lb">Max Downtime</span><span class="vl">72 hrs</span></li>
+                <li><span class="lb">PMS/Year</span><span class="vl">3 min</span></li>
+                <li><span class="lb">Spares</span><span class="vl">10 years</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- COMPLIANCE -->
+        <div class="pnl" id="p-cp">
+          <div class="ag">
+            <div class="ac fw">
+              <h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Submission Checklist</h4>
+              <div class="ck"><div class="cx done">✓</div>PAN Card copy</div>
+              <div class="ck"><div class="cx done">✓</div>GST Registration (15-digit GSTIN)</div>
+              <div class="ck"><div class="cx done">✓</div>Performance Statement (Form 7) — 3 years</div>
+              <div class="ck"><div class="cx"></div>Income Tax Returns — AY 2019-22</div>
+              <div class="ck"><div class="cx"></div>Tender Form (Form 1) — Notarized</div>
+              <div class="ck"><div class="cx"></div>Manufacturer Authorization (Form 5)</div>
+              <div class="ck"><div class="cx done">✓</div>EMD ₹2,00,000 online receipt</div>
+              <div class="ck"><div class="cx"></div>Technical Data Sheet + Model Decl.</div>
+              <div class="ck"><div class="cx"></div>Comparative Spec Table (Form 4)</div>
+              <div class="ck"><div class="cx"></div>Product Brochure (1 set)</div>
+              <div class="ck"><div class="cx"></div>CE/FDA/BIS Certificate</div>
+              <div class="ck"><div class="cx"></div>CA Turnover Certificate (Form 9)</div>
+              <div class="ck"><div class="cx"></div>Quality Declaration (Form 10)</div>
+              <div class="ck"><div class="cx"></div>BOQ + GST breakdown</div>
+              <div class="ck"><div class="cx"></div>Consumables &amp; Spares (Form 8a/8b)</div>
+            </div>
+            <div class="ac">
+              <h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg> Compliance Score</h4>
+              <div style="text-align:center;padding:12px 0">
+                <div style="font-size:46px;font-weight:800;color:var(--orange)" id="cScore">4</div>
+                <div style="font-size:20px;font-weight:700;color:var(--text-400);margin-top:-4px">/ 15</div>
+                <div style="font-size:12px;color:var(--text-500);margin-top:8px">Documents Ready</div>
+                <div style="margin-top:14px;background:var(--border-light);border-radius:5px;height:8px;overflow:hidden">
+                  <div style="height:100%;border-radius:5px;background:linear-gradient(90deg,var(--orange),var(--amber));transition:width .3s" id="cBar"></div>
+                </div>
+                <div style="font-size:11px;color:var(--text-400);margin-top:6px" id="cPct">27% Complete</div>
+              </div>
+            </div>
+            <div class="ac">
+              <h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> AI Recommendations</h4>
+              <div class="ri"><div class="rt" style="color:var(--rose)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Urgent: ITR copies needed</div><div class="rd">AY 2019-22 must be uploaded. Contact finance team.</div></div>
+              <div class="ri"><div class="rt" style="color:var(--orange)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Manufacturer Authorization</div><div class="rd">Form 5 on OEM letterhead for each category.</div></div>
+              <div class="ri"><div class="rt" style="color:var(--blue)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Auto-generate Spec Table</div><div class="rd">Form 4 can be AI-generated from brochure data.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TIMELINE -->
+        <div class="pnl" id="p-tl">
+          <div class="ag">
+            <div class="ac fw">
+              <h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Key Dates</h4>
+              <div class="tli"><div class="tld dm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="tlb"><div class="tlt">NIT Published &amp; Download Start</div><div class="tld2">01 February 2023</div></div></div>
+              <div class="tli"><div class="tld da"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="tlb"><div class="tlt">Pre-Bid Meeting at WBMSCL</div><div class="tld2">08 February 2023, 02:30 PM</div></div></div>
+              <div class="tli"><div class="tld dc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div><div class="tlb"><div class="tlt">Bid Submission Opens</div><div class="tld2">13 February 2023, 12:00 Noon</div></div></div>
+              <div class="tli"><div class="tld da"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="tlb"><div class="tlt">Submission Deadline</div><div class="tld2">21 February 2023, 05:00 PM</div></div></div>
+              <div class="tli"><div class="tld dm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div><div class="tlb"><div class="tlt">Technical Bid Opening (A &amp; B)</div><div class="tld2">21 February 2023, 05:30 PM</div></div></div>
+              <div class="tli"><div class="tld dc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><div class="tlb"><div class="tlt">Functional Demonstration</div><div class="tld2">To be notified</div></div></div>
+              <div class="tli"><div class="tld dm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="tlb"><div class="tlt">Financial Bid Opening</div><div class="tld2">To be notified</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DOCUMENTS -->
+        <div class="pnl" id="p-dc">
+          <div class="ag">
+            <div class="ac">
+              <h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Bid-A (Statutory)</h4>
+              <ul class="al">
+                <li><span>EMD Receipt</span><span class="rk rl">Ready</span></li>
+              </ul>
+            </div>
+            <div class="ac">
+              <h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Bid-B (Technical)</h4>
+              <ul class="al">
+                <li><span>Model Decl + TDS</span><span class="rk rh">Pending</span></li>
+                <li><span>Spec Table (Form 4)</span><span class="rk rh">Pending</span></li>
+                <li><span>Product Brochure</span><span class="rk rm">In Progress</span></li>
+                <li><span>CE/FDA/BIS</span><span class="rk rl">Ready</span></li>
+                <li><span>CA Turnover (Form 9)</span><span class="rk rh">Pending</span></li>
+                <li><span>Quality Decl (Form 10)</span><span class="rk rh">Pending</span></li>
+              </ul>
+            </div>
+            <div class="ac">
+              <h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Bid-C (Financial)</h4>
+              <ul class="al">
+                <li><span>BOQ (.xls)</span><span class="rk rh">Pending</span></li>
+                <li><span>Consumables (8a)</span><span class="rk rh">Pending</span></li>
+                <li><span>Spares (8b)</span><span class="rk rh">Pending</span></li>
+                <li><span>Duties (Form 7)</span><span class="rk rh">Pending</span></li>
+              </ul>
+            </div>
+            <div class="ac">
+              <h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> My Documents</h4>
+              <ul class="al">
+                <li><span>PAN Card</span><span class="rk rl">Ready</span></li>
+                <li><span>GST Certificate</span><span class="rk rl">Ready</span></li>
+                <li><span>Perf. Stmt (Form 6)</span><span class="rk rm">In Progress</span></li>
+                <li><span>ITR (3 Years)</span><span class="rk rh">Pending</span></li>
+                <li><span>Tender Form (1)</span><span class="rk rh">Pending</span></li>
+                <li><span>Mfr Auth (Form 5)</span><span class="rk rh">Pending</span></li>
+              </ul>
+            </div>
+            <div class="ac fw">
+              <div class="ins">
+                <div class="tg"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> AI Document Generation</div>
+                <p>Auto-generate: <strong>Form 1, Form 4, Form 6, Form 7, Form 10</strong> from company profile. Estimated: 2 minutes.</p>
+              </div>
+              <button class="btn-ai" style="margin-top:12px;width:auto;display:inline-flex;padding:10px 22px;font-size:12.5px">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                Generate Documents with AI
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end analysis view -->
+    </div><!-- end main -->
+  </div><!-- end appLayout -->
+
+
+  <!-- ═══════════════════════════════════════════
+       BID SIMULATOR MODAL
+       ═══════════════════════════════════════════ -->
+  <div class="mo-bg" id="bidSimModal">
+    <div class="mo" style="width:620px">
+      <div class="mo-h">
+        <div>
+          <h3>AI Bid Simulator</h3>
+          <p style="font-size:11px;color:var(--text-400);margin-top:2px">Predict win probability based on pricing strategy</p>
+        </div>
+        <button class="mo-x" onclick="closeBidSim()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="mo-b">
+        <div class="fg">
+          <label>Equipment Item</label>
+          <select id="simItem" class="fi" onchange="updateSimulation()" style="appearance:auto;cursor:pointer">
+            <option value="slit">Slit Lamp with Tonometer (42 units)</option>
+            <option value="phaco">Phaco Machine (21 units)</option>
+            <option value="ophth">Direct Ophthalmoscope (185 units)</option>
+            <option value="indirect">Indirect Ophthalmoscope (10 units)</option>
+            <option value="specular">Specular Microscope (4 units)</option>
+          </select>
+        </div>
+
+        <div class="fg">
+          <label>Your Bid Price (per unit)</label>
+          <div class="sim-slider-row">
+            <input type="range" id="simPrice" class="sim-range" min="0" max="100" value="55" oninput="updateSimulation()">
+            <div class="sim-price-val" id="simPriceVal">₹4,12,500</div>
+          </div>
+          <div class="sim-range-labels"><span>Aggressive</span><span>Market Rate</span><span>Premium</span></div>
+        </div>
+
+        <div class="sim-results">
+          <div class="sim-gauge-wrap">
+            <svg class="sim-gauge" viewBox="0 0 200 120">
+              <defs>
+                <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#e11d48"/>
+                  <stop offset="50%" stop-color="#f59e0b"/>
+                  <stop offset="100%" stop-color="#16a34a"/>
+                </linearGradient>
+              </defs>
+              <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#e2e8f0" stroke-width="14" stroke-linecap="round"/>
+              <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#gaugeGrad)" stroke-width="14" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="0"/>
+              <line id="simNeedle" x1="100" y1="100" x2="100" y2="28" stroke="var(--text-900)" stroke-width="2.5" stroke-linecap="round" transform="rotate(-45, 100, 100)" style="transition:transform .8s cubic-bezier(.34,1.56,.64,1)"/>
+              <circle cx="100" cy="100" r="5" fill="var(--text-900)"/>
+            </svg>
+            <div class="sim-gauge-pct" id="simPct">68%</div>
+            <div class="sim-gauge-label">Win Probability</div>
+          </div>
+
+          <div class="sim-insights">
+            <div class="sim-row"><span>Estimated Market Price</span><span id="simMarket">₹4,50,000</span></div>
+            <div class="sim-row"><span>Your Position</span><span id="simPosition" style="color:var(--green)">8% Below Market</span></div>
+            <div class="sim-row"><span>Expected Competitors</span><span id="simComp">4–6 bidders</span></div>
+            <div class="sim-row"><span>Total Bid Value</span><span id="simTotal" style="font-weight:700">₹1,73,25,000</span></div>
+            <div class="sim-row"><span>Profit Margin Est.</span><span id="simMargin" style="color:var(--orange)">~12%</span></div>
+            <div class="sim-tip" id="simTip">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <span>Sweet spot: pricing 5–10% below market maximizes win probability while maintaining healthy margins.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════
+       UPLOAD MODAL
+       ═══════════════════════════════════════════ -->
+  <div class="mo-bg" id="uModal">
+    <div class="mo">
+      <div class="mo-h">
+        <h3>Upload New Tender</h3>
+        <button class="mo-x" onclick="closeModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="mo-b">
+        <div class="dz" id="dz">
+          <input type="file" id="fIn" accept=".pdf,.doc,.docx" onchange="onF(event)">
+          <div class="dzi"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--text-400)" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <h4>Drop tender document or click to browse</h4>
+          <p>PDF, DOC, DOCX — Max 50MB</p>
+        </div>
+        <div class="frow" id="fRow">
+          <div class="fico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="fdet"><div class="fnm" id="fNm">—</div><div class="fsz" id="fSz">—</div></div>
+          <button class="frm" onclick="clrF()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <div class="uf">
+          <div class="fg">
+            <label>Tender Name</label>
+            <input class="fi" id="tNm" placeholder="e.g., Ophthalmic Equipment Procurement">
+          </div>
+          <div class="f2">
+            <div class="fg">
+              <label>Priority</label>
+              <select id="tPr">
+                <option value="h">High</option>
+                <option value="m" selected>Medium</option>
+                <option value="l">Low</option>
+              </select>
+            </div>
+            <div class="fg">
+              <label>Category</label>
+              <select>
+                <option>Ophthalmic Equipment</option>
+                <option>Surgical Consumables</option>
+                <option>IOL &amp; Lenses</option>
+                <option>Diagnostic Equipment</option>
+              </select>
+            </div>
+          </div>
+          <div class="fg">
+            <label>Assign To</label>
+            <select>
+              <option>Tender Team — Primary</option>
+              <option>Regional — South</option>
+              <option>Regional — East</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn-ai" id="aBtn" onclick="startAI()" disabled>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Analyze with AI
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════
+       AI ANALYZING OVERLAY
+       ═══════════════════════════════════════════ -->
+  <div class="aio" id="aiO">
+    <div class="spn"></div>
+    <div class="at">Analyzing Tender Document</div>
+    <div class="as">AI is extracting requirements, risks, and building your checklist</div>
+    <div class="ai-steps">
+      <div class="ai-s now" id="s1"><div class="sd"></div>Parsing document structure…</div>
+      <div class="ai-s" id="s2"><div class="sd"></div>Extracting eligibility criteria…</div>
+      <div class="ai-s" id="s3"><div class="sd"></div>Analyzing technical specs…</div>
+      <div class="ai-s" id="s4"><div class="sd"></div>Identifying risks &amp; deadlines…</div>
+      <div class="ai-s" id="s5"><div class="sd"></div>Generating compliance checklist…</div>
+    </div>
+  </div>
+
+
+  <!-- JavaScript -->
+  <script src="app.js"></script>
+  <script src="chat.js"></script>
+
+</body>
+</html>
